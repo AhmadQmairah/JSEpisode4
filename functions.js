@@ -155,7 +155,7 @@ function relatedBooks(bookId, authors, books) {
       titles.forEach(title => x.push(title));
     }
   });
-
+  //x = [...new Set(x)];
   return x;
 }
 
@@ -170,25 +170,30 @@ function friendliestAuthor(authors) {
   let OldCount = 0;
   let MyAuthor;
   let OldBooks = [];
-  authors[0].books.forEach(book => {
-    OldBooks.push(book);
-  });
+
   authors.forEach(author => {
     author.books.forEach(book => {
       if (OldBooks.includes(book)) {
-        console.log(book);
-        count++;
       } else {
         OldBooks.push(book);
       }
     });
-
-    if (count >= OldCount) {
-      MyAuthor = author.name;
-    }
-    OldCount = count;
   });
-  console.log(OldBooks);
+
+  authors.forEach(author => {
+    count = 0;
+    author.books.forEach(book => {
+      if (OldBooks.includes(book)) {
+        count++;
+      }
+    });
+    if (count > OldCount) {
+      MyAuthor = author.name;
+      OldCount = count;
+    }
+  });
+
+  console.log(MyAuthor);
   return MyAuthor;
 }
 
